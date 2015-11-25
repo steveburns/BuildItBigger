@@ -1,29 +1,24 @@
-package steveburns.me.builditbigger;
+package steveburns.me.jokeactivity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import me.steveburns.JavaJokes;
-import steveburns.me.jokeactivity.JokeActivity;
-
-public class MainActivity extends AppCompatActivity {
+public class JokeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_joke);
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_joke, menu);
         return true;
     }
 
@@ -40,14 +35,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void tellJoke(View view) {
-//        Toast.makeText(this, JavaJokes.returnAJoke(), Toast.LENGTH_LONG).show();
-
-        Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra("joke_text", JavaJokes.returnAJoke());
-
-        startActivity(intent);
     }
 }
