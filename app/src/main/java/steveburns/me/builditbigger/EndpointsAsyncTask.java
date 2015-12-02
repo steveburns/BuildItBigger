@@ -1,9 +1,9 @@
 package steveburns.me.builditbigger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Pair;
-import android.widget.Toast;
 
 import com.builditbigger.sburns.jokes.backend.myApi.MyApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -12,6 +12,8 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
+
+import steveburns.me.jokeactivity.JokeActivity;
 
 /**
  * Created by sburns on 12/1/15.
@@ -44,7 +46,6 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
         final String name = params[0].second;
 
         try {
-//            return sApiService.sayHi(name).execute().getData();
             return sApiService.getJoke().execute().getData();
         } catch (IOException e) {
             return e.getMessage();
@@ -53,6 +54,9 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
 
     @Override
     protected void onPostExecute(final String result) {
-        Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(mContext, JokeActivity.class);
+        intent.putExtra("joke_text", result);
+
+        mContext.startActivity(intent);
     }
 }
