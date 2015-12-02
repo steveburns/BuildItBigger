@@ -1,14 +1,15 @@
 package steveburns.me.builditbigger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import me.steveburns.JavaJokes;
+//import me.steveburns.JavaJokes;
 import steveburns.me.jokeactivity.JokeActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,9 +46,13 @@ public class MainActivity extends AppCompatActivity {
     public void tellJoke(View view) {
 //        Toast.makeText(this, JavaJokes.returnAJoke(), Toast.LENGTH_LONG).show();
 
+        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+/*
         Intent intent = new Intent(this, JokeActivity.class);
         intent.putExtra("joke_text", JavaJokes.returnAJoke());
 
         startActivity(intent);
+*/
     }
+
 }
