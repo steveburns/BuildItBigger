@@ -1,9 +1,7 @@
 package steveburns.me.builditbigger;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Pair;
 
 import com.builditbigger.sburns.jokes.backend.myApi.MyApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -13,17 +11,19 @@ import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
 
-import steveburns.me.jokeactivity.JokeActivity;
-
 /**
  * Created by sburns on 12/1/15.
  */
-class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
     private static MyApi sApiService = null;
-    private Context mContext;
+    private AsyncTaskResponse mAsyncTaskResponse;
+
+    public EndpointsAsyncTask(final AsyncTaskResponse asyncTaskResponse) {
+        mAsyncTaskResponse = asyncTaskResponse;
+    }
 
     @Override
-    protected String doInBackground(final Pair<Context, String>... params) {
+    protected String doInBackground(final Context... params) {
         if (sApiService == null) {  // Only do this once
             final MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -31,6 +31,10 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
                     // - 10.0.2.2 is localhost's IP address in Android emulator
                     // - turn off compression when running against local devappserver
                     .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+//                    .setRootUrl("http://10.0.2.2:8080/")
+//                    .setRootUrl("http://10.0.2.2:8888/")
+//                    .setRootUrl("http://0.0.0.0/_ah/api/")
+//                    .setRootUrl("http://10.0.2.2/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(final AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -42,9 +46,6 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
             sApiService = builder.build();
         }
 
-        mContext = params[0].first;
-        final String name = params[0].second;
-
         try {
             return sApiService.getJoke().execute().getData();
         } catch (IOException e) {
@@ -54,9 +55,9 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
 
     @Override
     protected void onPostExecute(final String result) {
-        Intent intent = new Intent(mContext, JokeActivity.class);
-        intent.putExtra("joke_text", result);
 
-        mContext.startActivity(intent);
+        if (mAsyncTaskResponse != null) {
+            mAsyncTaskResponse.notifyCaller(result);
+        }
     }
 }

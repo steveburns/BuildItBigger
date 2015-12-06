@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-//import me.steveburns.JavaJokes;
 import steveburns.me.jokeactivity.JokeActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,16 +41,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke(View view) {
+    public void tellJoke(final View view) {
 //        Toast.makeText(this, JavaJokes.returnAJoke(), Toast.LENGTH_LONG).show();
 
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
-/*
-        Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra("joke_text", JavaJokes.returnAJoke());
+        final Context theContext = this;
+        final AsyncTaskResponse asyncTaskResponse = new AsyncTaskResponse() {
+            @Override
+            public void notifyCaller(final String result) {
+                final Intent intent = new Intent(theContext, JokeActivity.class);
+                intent.putExtra("joke_text", result);
+                theContext.startActivity(intent);
+            }
+        };
 
-        startActivity(intent);
-*/
+        new EndpointsAsyncTask(asyncTaskResponse).execute(this);
     }
 
 }
