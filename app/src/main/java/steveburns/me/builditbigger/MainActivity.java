@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+/*
     public void tellJoke(final View view) {
 
         final Context theContext = this;
@@ -55,5 +56,5 @@ public class MainActivity extends AppCompatActivity {
 
         new EndpointsAsyncTask(asyncTaskResponse).execute(this);
     }
-
+*/
 }
