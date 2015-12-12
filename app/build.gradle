@@ -28,6 +28,15 @@ android {
             signingConfig signingConfigs.config
         }
     }
+
+    productFlavors {
+        free {
+            applicationId "steveburns.me.builditbigger.free"
+        }
+        paid {
+            applicationId "steveburns.me.builditbigger.paid"
+        }
+    }
 }
 
 dependencies {
