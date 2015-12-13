@@ -1,14 +1,9 @@
 package steveburns.me.builditbigger;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import steveburns.me.jokeactivity.JokeActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,21 +35,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-/*
-    public void tellJoke(final View view) {
-
-        final Context theContext = this;
-        final AsyncTaskResponse asyncTaskResponse = new AsyncTaskResponse() {
-            @Override
-            public void notifyCaller(final String result) {
-                final Intent intent = new Intent(theContext, JokeActivity.class);
-                intent.putExtra("joke_text", result);
-                theContext.startActivity(intent);
-            }
-        };
-
-        new EndpointsAsyncTask(asyncTaskResponse).execute(this);
-    }
-*/
 }
