@@ -16,6 +16,9 @@ import steveburns.me.jokeactivity.JokeActivity;
  */
 public class MainActivityFragment extends Fragment {
 
+    /**
+     * constructor.
+     */
     public MainActivityFragment() {
     }
 
@@ -28,18 +31,25 @@ public class MainActivityFragment extends Fragment {
         final ProgressBar spinner = (ProgressBar) root.findViewById(R.id.progressBar);
         spinner.setVisibility(View.GONE);
 
-        FlavorUtils.insertAds(root);
+        final AdInterface adInterface = new AdInterface() {
+            @Override
+            public void notifyFinished() {
+                tellJoke(spinner);
+            }
+        };
+
+        final AdManager mAdManager = new AdManager(getContext(), root, adInterface);
 
         root.findViewById(R.id.tell_joke_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                tellJoke(view, spinner);
+                mAdManager.showAd();
             }
         });
         return root;
     }
 
-    private void tellJoke(final View view, final ProgressBar spinner) {
+    private void tellJoke(final ProgressBar spinner) {
 
         spinner.setVisibility(View.VISIBLE);
         final Context theContext = getActivity();
