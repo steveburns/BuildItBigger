@@ -17,3 +17,11 @@ allprojects {
         jcenter()
     }
 }
+
+task runAllTests(
+        dependsOn:[
+                ':jokebackend:appengineRun',
+                ':app:connectedAndroidTest',
+                ':jokebackend:appengineStop'
+        ]
+)

@@ -32,7 +32,7 @@ public class AdManager {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
-                mAdInterface.notifyAdFinished();
+                mAdInterface.notifyFinished();
             }
         });
 
